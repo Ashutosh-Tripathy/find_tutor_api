@@ -5,7 +5,7 @@ db:
       email:    String, length 100, not null, unique
       password: String, length 50, not null, min len 4
       is_email_verified: boolean, default false
-      mobile:   Integer, not null, length=10
+      mobile:   Integer, not null, length=10, unique
       type:     String, not null, length=1, isIn: [['S', 'T']], (S= Student, T= Tutor)
 
 
@@ -15,15 +15,16 @@ db:
       min_rate: Integer, not null, min:10
       max_rate: Integer, not null, max 50000
       summary:  String, not null, length, 120
-      about_me: String, not null, length 2000
-      about_session: String, not null, length 2000
+      about_me: String, length 2000
+      subject_id: Integer, foreign key (subject, id)
+      about_session: String, length 2000
       qualification: String, not null, length 2000
       availability:  String, not null, lenth 1000
       state_id:    Integer, foreign key (state, id)
       district_id: Integer, foreign key (district, id)
       comments: String, allow null, length 1000
       is_hidden:     Boolean, default false
-    
+
     state:
       id: Integer, primary key, not null
       Name: String, length 50, not null
@@ -31,6 +32,10 @@ db:
     district:
       id: Integer, primary key, not null
       Name: String, length 50, not null
+
+    subject:
+      id: Integer, primary key, not null
+      name: String, length 30, not null
 
 
 ===================================================================
@@ -42,27 +47,31 @@ api:
     put /id    app_user expect (email, password, otp)
     get /id   return user (name, email, mobile, type)
     get  isemailverified (id) return (true, false)
-  post verifyemail (email, hash) 
-  getTutor /id return (id,gender, name, min-max rate, degree, summary, state, district, about_me) 
-  getTutorDetail /id tutor (email, mobile, about_session, qualification, avalability, state_id, district_id, comments)    
+    search condition return [userids]
+  post verifyemail (email, hash)
+  getTutor /id return (id,gender, name, min-max rate, degree, summary, state, district, about_me)
+  getTutorDetail /id tutor (email, mobile, about_session, qualification, avalability, state_id, district_id, comments)
   post authkey (email, password)  (id, name, type)  return authkey
-  
+
   tutor:
-    post /id: tutor (gender, qualification, avalability, state_id, district_id, comments)
-    put /id: tutor (min-max rate, summary, aboutme, qualification, avalability, state_id, district_id, comments, is_hidden)
-    get /id: return tutor  
+    post /id: tutor (gender, min-max rate, summary, subject_id, about_me, about_session qualification, avalability, state_id, district_id, comments)
+    put /id: tutor (min-max rate, summary, subject_id, about_me, about_session, qualification, avalability, state_id, district_id, comments, is_hidden)
+    get /id: return tutor
+
+  Subjects:
+    get: List < subject> (id, subject name)
 
 
-  search condition return [userids] 
-     
+
 
 ==================================================================
 
 
 authenticate:
-  all api except 
+  all api except
     post authkey
     verifyemail
+    Subjects
 
 
 authorization:

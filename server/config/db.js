@@ -2,11 +2,17 @@
 
 import Sequelize from 'sequelize';
 import env from './env';
-import users from '../models/users.js';
-import trips from '../models/trips.js';
+import app_user from '../models/app_user.js';
+import tutor from '../models/tutor.js';
+import subject from '../models/subject.js';
+import state from '../models/state.js';
+import district from '../models/district.js';
+
+const Op = Sequelize.Op;
 const sequelize = new Sequelize(env.DATABASE_NAME, env.DATABASE_USERNAME, env.DATABASE_PASSWORD, {
     host: env.DATABASE_HOST,
     dialect: env.DATABASE_DIALECT,
+    operatorsAliases: Op,
     define: {
         underscored: true
     },
@@ -22,18 +28,31 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
 //Models/tables
-db.users = users(sequelize, Sequelize);
-db.trips = trips(sequelize, Sequelize);
+db.app_user= app_user(sequelize, Sequelize);
+db.tutor = tutor(sequelize, Sequelize);
+db.subject = subject(sequelize, Sequelize);
+db.state = state(sequelize, Sequelize);
+db.district = district(sequelize, Sequelize);
 
-//Relations
-//Task.belongsTo(User, { foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
-//User.hasMany(Task, { foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
 
-//db.trips.belongsTo(db.users, { foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
-//db.users.hasMany(db.trips, { foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
+//tutor association
+db.tutor.belongsTo(db.app_user, { foreignKey: 'id', onDelete: 'CASCADE' });
+db.app_user.hasMany(db.tutor, { foreignKey: 'id', onDelete: 'CASCADE' });
 
-db.trips.belongsTo(db.users, { foreignKey: 'user_id', onDelete: 'CASCADE' });
-db.users.hasMany(db.trips, { foreignKey: 'user_id', onDelete: 'CASCADE' });
+
+db.tutor.belongsTo(db.subject, { foreignKey: 'subject_id' });
+db.subject.hasMany(db.tutor, { foreignKey: 'subject_id' });
+
+db.tutor.belongsTo(db.state, { foreignKey: 'state_id' });
+db.state.hasMany(db.tutor, { foreignKey: 'state_id' });
+
+db.tutor.belongsTo(db.district, { foreignKey: 'district_id' });
+db.district.hasMany(db.tutor, { foreignKey: 'district_id' });
+
+//district association
+db.district.belongsTo(db.state, { foreignKey: 'state_id' });
+db.state.hasMany(db.district, { foreignKey: 'state_id' });
+
 
 
 module.exports = db;

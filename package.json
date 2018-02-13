@@ -8,10 +8,8 @@
   "scripts": {
     "dev": "NODE_PATH=./ pm2 start --interpreter babel-node index.js --watch",
     "start": "npm-run-all --parallel dev",
-
     "lint": "node_modules/.bin/esw webpack.config.* src tools",
     "lint:watch": "npm run lint -- --watch",
- 
     "webpack": "webpack -wd",
     "test": "jest",
     "test:watch": "npm run test -- --watch"

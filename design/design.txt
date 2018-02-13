@@ -1,16 +1,16 @@
 db:
     app_user:
       id:       Big int, primarykey, autoincrement
-      name:     String, length 100, not null
       email:    String, length 100, not null, unique
-      password: String, length 50, not null, min len 4
+      password: String, length 100, not null
       is_email_verified: boolean, default false
+      name:     String, length 100, not null
       mobile:   Integer, not null, length=10, unique
       type:     String, not null, length=1, isIn: [['S', 'T']], (S= Student, T= Tutor)
 
 
     tutur
-      id: Big int, primarykey
+      id: Big int, primarykey, foreign key (app_user(id))
       gender:   String, not null, length 1, isIn: [['M', 'F']],
       min_rate: Integer, not null, min:10
       max_rate: Integer, not null, max 50000
@@ -27,15 +27,16 @@ db:
 
     state:
       id: Integer, primary key, not null
-      Name: String, length 50, not null
+      Name: String, length 50, not null, unique
 
     district:
       id: Integer, primary key, not null
       Name: String, length 50, not null
+      state_id: Integer, not null (foreign key state(id))
 
     subject:
       id: Integer, primary key, not null
-      name: String, length 30, not null
+      name: String, length 100, not null, unique
 
 
 ===================================================================

@@ -43,7 +43,7 @@ const app_user = (sequelize, DataTypes) => {
     }
   }, {
     paranoid: true,
-    timestamps: true,
+    timestamps: false,
     underscored: true,
     freezeTableName: true
   });

@@ -70,7 +70,7 @@ const tutor = (sequelize, DataTypes) => {
     }
   }, {
     paranoid: true,
-    timestamps: true,
+    timestamps: false,
     underscored: true,
     freezeTableName: true
   });

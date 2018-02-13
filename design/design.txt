@@ -41,18 +41,23 @@ db:
 
 ===================================================================
 
+id, email, password, is_email_verified, Name, mobile, type
+id, gender, min_rate, max_rate, summary, subject_id, about_me, about_session, qualification,       availability, state_id, district_id, comments, is_hidden
 
 api:
   app_user:
-    post    app_user expect (name, email, password, mobile, type, is_email_verified)
+    get /id   return user (id, email, is_email_verified, name, mobile, type)
+    post    app_user expect (email, password, name, mobile, type)
     put /id    app_user expect (email, password, otp)
-    get /id   return user (name, email, mobile, type)
-    get  isemailverified (id) return (true, false)
+
     search condition return [userids]
-  post verifyemail (email, hash)
-  getTutor /id return (id,gender, name, min-max rate, degree, summary, state, district, about_me)
-  getTutorDetail /id tutor (email, mobile, about_session, qualification, avalability, state_id, district_id, comments)
-  post authkey (email, password)  (id, name, type)  return authkey
+    ?    get  verify email (id) return (true, false)
+    post verifyemail (email, hash)
+    getTutor /id return (id, name, gender, min_rate, max_rate, summary, subject_id, about_me)
+    getTutorDetail /id tutor (email, mobile, about_session, qualification, avalability, state_id, district_id, comments)
+
+Authenticate:
+    post authkey (email, password)  (id, name, type)  return authkey
 
   tutor:
     post /id: tutor (gender, min-max rate, summary, subject_id, about_me, about_session qualification, avalability, state_id, district_id, comments)

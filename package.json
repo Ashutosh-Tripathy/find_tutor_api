@@ -1,0 +1,41 @@
+{
+  "name": "find_tutor_api",
+  "version": "1.0.0",
+  "description": "Api for find_tutor_app",
+  "main": "server.js",
+  "repository": "git@git.toptal.com:Ashutosh-Tripathy/ashutosh-tripathy.git",
+  "author": "Ashutosh Triathy",
+  "scripts": {
+    "dev": "NODE_PATH=./ pm2 start --interpreter babel-node index.js --watch",
+    "start": "npm-run-all --parallel dev",
+
+    "lint": "node_modules/.bin/esw webpack.config.* src tools",
+    "lint:watch": "npm run lint -- --watch",
+ 
+    "webpack": "webpack -wd",
+    "test": "jest",
+    "test:watch": "npm run test -- --watch"
+  },
+  "private": true,
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-polyfill": "^6.26.0",
+    "bcrypt": "^1.0.3",
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "jsonwebtoken": "^8.1.0",
+    "npm-run-all": "^4.1.2",
+    "pm2": "^2.8.0",
+    "sequelize": "^4.28.0",
+    "sqlite3": "^3.1.13",
+    "webpack": "^3.10.0",
+    "winston": "^2.4.0"
+  },
+  "devDependencies": {
+    "babel-preset-es2015": "^6.24.1",
+    "eslint": "^4.13.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-watch": "^3.1.3",
+    "jest": "^21.2.1"
+  }
+}

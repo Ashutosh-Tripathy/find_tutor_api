@@ -50,7 +50,7 @@ api:
     post    app_user expect (email, password, name, mobile, type)
     put /id    app_user expect (email, password, otp)
 
-    search condition return [userids]
+    search condition (subject_id, state_id, district_id) return [user_id]
     ?    get  verify email (id) return (true, false)
     post verifyemail (email, hash)
     getTutor /id return (id, name, gender, min_rate, max_rate, summary, subject_id, about_me)
@@ -85,3 +85,8 @@ authorization:
     get, put, post: own data only
   tutor:
     get, post, put: own data only
+
+
+ssh root@scacaa01jb.us.oracle.com   / welcome1
+ssh root@192.168.10.44  / welcome1
+https://jira.oraclecorp.com/jira/browse/OCACS-2143

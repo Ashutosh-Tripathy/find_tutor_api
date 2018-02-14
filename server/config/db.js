@@ -37,7 +37,7 @@ db.district = district(sequelize, Sequelize);
 
 //tutor association
 db.tutor.belongsTo(db.app_user, { foreignKey: 'id', onDelete: 'CASCADE' });
-db.app_user.hasMany(db.tutor, { foreignKey: 'id', onDelete: 'CASCADE' });
+db.app_user.hasOne(db.tutor, { foreignKey: 'id', onDelete: 'CASCADE' });
 
 
 db.tutor.belongsTo(db.subject, { foreignKey: 'subject_id' });

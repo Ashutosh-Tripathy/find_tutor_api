@@ -63,11 +63,41 @@ module.exports = (router, db) => {
   router.post('/verifyEmail', (req, res) => {
     res.status(200).json({ message: 'Functionality not yet implimented' });
   });
-  
+
 
   // Search tutor
   router.get('/searchTutor', (req, res) => {
-    res.status(200).json({ message: 'Functionality not yet implimented' });
+    let queryObj = {'is_hidden': false};
+    const {subject_id, state_id, district_id} = req.query;
+    logger(3, `searchTutor, subject_id: ${subject_id}`);
+
+    if(!subject_id) {
+      return res.status(400).json({message: 'Missing query parameter.'});
+    }
+
+    queryObj['subject_id'] = subject_id;
+    if(state_id) {
+      queryObj['state_id'] = state_id;
+    }
+    if(district_id) {
+      queryObj['district_id'] = district_id;
+    }
+
+    db.app_user.findAll({
+      attributes: ['id'],
+      include: [{model: db.tutor, attributes:['subject_id'], where: queryObj, required: true}]
+    })
+    .then(ids => {
+      if (!ids) {
+        res.status(404).json({ message: 'Resource not found.' });
+      } else {
+        res.status(200).json(ids);
+      }
+    })
+    .catch(err => {
+      logger(0, err);
+      res.status(500).json({ message: 'Unsuccessful, Please try again.' });
+    });
   });
 
   // get tutor
@@ -78,7 +108,7 @@ module.exports = (router, db) => {
     db.app_user.find({
       where: { id: { [Op.eq]: id } },
       attributes: ['id', 'name'],
-      include: [{model: db.tutor, attributes:['gender', 'min_rate', 'max_rate', 'summary', 'subject_id', 'about_me']}]
+      include: [{model: db.tutor, attributes:['gender', 'min_rate', 'max_rate', 'summary', 'subject_id', 'about_me'], required: true}]
     })
     .then(tutor => {
       if (!tutor) {
@@ -102,7 +132,7 @@ module.exports = (router, db) => {
     db.app_user.find({
       where: { id: { [Op.eq]: id } },
       attributes: ['id', 'email', 'mobile'],
-      include: [{model: db.tutor, attributes: ['about_session', 'qualification', 'availability', 'state_id', 'district_id', 'comment']}]
+      include: [{model: db.tutor, attributes: ['about_session', 'qualification', 'availability', 'state_id', 'district_id', 'comment'], required: true}]
     })
     .then(tutorDetail => {
       if (!tutorDetail) {

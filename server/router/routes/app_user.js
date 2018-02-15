@@ -12,7 +12,7 @@ module.exports = (router, db) => {
     const id = req.params.id;
     logger(3, `Get app_user: ${id}`);
 
-    db.app_user.find({
+    db.app_user.findOne({
       where: { id: { [Op.eq]: id } },
       attributes: { exclude: ['password'] }
     })
@@ -105,7 +105,7 @@ module.exports = (router, db) => {
     const id = req.params.id;
     logger(3, `getTutor: ${id}`);
 
-    db.app_user.find({
+    db.app_user.findOne({
       where: { id: { [Op.eq]: id } },
       attributes: ['id', 'name'],
       include: [{model: db.tutor, attributes:['gender', 'min_rate', 'max_rate', 'summary', 'subject_id', 'about_me'], required: true}]
@@ -129,7 +129,7 @@ module.exports = (router, db) => {
     const id = req.params.id;
     logger(3, `getTutorDetail: ${id}`);
 
-    db.app_user.find({
+    db.app_user.findOne({
       where: { id: { [Op.eq]: id } },
       attributes: ['id', 'email', 'mobile'],
       include: [{model: db.tutor, attributes: ['about_session', 'qualification', 'availability', 'state_id', 'district_id', 'comment'], required: true}]

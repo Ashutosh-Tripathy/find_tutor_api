@@ -57,7 +57,7 @@ api:
     getTutorDetail /id tutor (email, mobile, about_session, qualification, avalability, state_id, district_id, comments)
 
 Authenticate:
-    post authkey (email, password)  (id, name, type)  return authkey
+    authenticate (email, password)  (id, type)  return authkey
 
   tutor:
     post /id: tutor (gender, min-max rate, summary, subject_id, about_me, about_session qualification, avalability, state_id, district_id, comments)

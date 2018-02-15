@@ -42,7 +42,6 @@ db:
 ===================================================================
 
 id, email, password, is_email_verified, Name, mobile, type
-id, gender, min_rate, max_rate, summary, subject_id, about_me, about_session, qualification,       availability, state_id, district_id, comments, is_hidden
 
 api:
   app_user:
@@ -57,16 +56,22 @@ api:
     getTutorDetail /id tutor (email, mobile, about_session, qualification, avalability, state_id, district_id, comments)
 
 Authenticate:
-    authenticate (email, password)  (id, type)  return authkey
+    authenticate (email, password)  (id, name, type)  return authkey
 
+id, gender, min_rate, max_rate, summary, subject_id, about_me, about_session, qualification,       availability, state_id, district_id, comments, is_hidden
   tutor:
+    get /id: return tutor
     post /id: tutor (gender, min-max rate, summary, subject_id, about_me, about_session qualification, avalability, state_id, district_id, comments)
     put /id: tutor (min-max rate, summary, subject_id, about_me, about_session, qualification, avalability, state_id, district_id, comments, is_hidden)
-    get /id: return tutor
 
   Subjects:
     get: List < subject> (id, subject name)
 
+  States:
+    get: List <State>
+
+  District:
+    get/id List <District>
 
 
 

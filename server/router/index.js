@@ -2,7 +2,11 @@
 
 const routes = [
     require('./routes/authenticate'),
-    require('./routes/app_user')
+    require('./routes/app_user'),
+    require('./routes/tutor'),
+    require('./routes/state'),
+    require('./routes/district'),
+    require('./routes/subject')
 ];
 
 

@@ -6,8 +6,9 @@ import app_router from './server/router/index';
 import db from './server/config/db';
 import verifytoken from './server/middleware/verifytoken';
 import authorize from './server/middleware/authorize';
-
+import cors from 'cors';
 const app = express();
+app.use(cors());
 var router = express.Router();
 app.set('superSecret', env.SECRET);
 

@@ -147,3 +147,37 @@ module.exports = (router, db) => {
     });
   });
 };
+
+
+
+
+// with open('list.txt', 'r') as l:
+// m = l.readlines()
+// s = {}
+// for x in m:
+//   x = x.strip()
+// print(x)
+// id, state = x.split(",")
+// s[state] = id
+// n = []
+// k = []
+// print(s)
+// print("----------------------------")
+// with open('state.txt', 'r') as l:
+// m = l.readlines()
+// for x in m:
+//   x = x.strip()
+// found = False
+// for state in s:
+//   if state in x:
+//     found = True
+// n.append(x.replace("'" + state + "')", s[state] + ")"))
+// if not found:
+//   k.append(x)
+
+// print(n)
+// with open('state.txt', 'w') as l:
+// l.writelines("\n".join(n))
+
+// print("+++++++++++++++++++++++++++++++")
+// print(k)

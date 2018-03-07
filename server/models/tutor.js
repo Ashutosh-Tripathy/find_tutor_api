@@ -3,7 +3,8 @@ const tutor = (sequelize, DataTypes) => {
   const tbl = sequelize.define('tutor', {
     id: {
       type: DataTypes.BIGINT,
-      primaryKey: true,
+      allowNull: false,
+      primaryKey: true
     },
     gender: {
       type: DataTypes.ENUM('M', 'F'),

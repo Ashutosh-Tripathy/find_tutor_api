@@ -29,9 +29,9 @@ module.exports = (router, db) => {
 
   // POST single tutor
   router.post('/tutor', (req, res) => {
-    const {gender, min_rate, max_rate, summary, subject_id, about_me, about_session, qualification, avalability, state_id, district_id, comment} = req.body;
-    logger(2, `Post tutor: ${id}, name: ${name}`);
-    db.tutor.create({gender, min_rate, max_rate, summary, subject_id, about_me, about_session, qualification, avalability, state_id, district_id, comment })
+    const {id, gender, min_rate, max_rate, summary, subject_id, about_me, about_session, qualification, availability, state_id, district_id, comment} = req.body;
+    logger(2, `Post tutor: ${id}, subject_id: ${subject_id}`);
+    db.tutor.create({id, gender, min_rate, max_rate, summary, subject_id, about_me, about_session, qualification, availability, state_id, district_id, comment })
       .then(new_tutor => {
         new_tutor.password = '';
         res.status(200).json(new_tutor);

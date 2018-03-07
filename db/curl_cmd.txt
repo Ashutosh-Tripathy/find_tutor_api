@@ -1,0 +1,5 @@
+curl -H "Content-Type: application/json" -X POST -d '{"email": "test-1@gmail.com", "name": "test-1", "mobile": 9867917100, "type": "S", "password": "test-1"}' http://52.172.34.19:8080/api/app_user ;
+
+
+curl -H "Content-Type: application/json" -X POST -d '{"id": 2, "gender": "M", "min_rate": 100, "max_rate": 500, "summary": "summary", "subject_id": 1, "about_me": "about me", "about_session": "about session", "qualification": "B.Tech", "availability": "Weekdays", "state_id": 34, "district_id": 1, "comment": "comment"}' http://52.172.34.19:8080/api/tutor
+

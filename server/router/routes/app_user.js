@@ -8,7 +8,7 @@ module.exports = (router, db) => {
   const Op = db.Sequelize.Op;
 
   // GET one app_user by id
-  router.get('/appUser/:id', (req, res) => {
+  router.get('/app_user/:id', (req, res) => {
     const id = req.params.id;
     logger(3, `Get app_user: ${id}`);
 
@@ -31,9 +31,9 @@ module.exports = (router, db) => {
   });
 
   // POST single app_user
-  router.post('/appUser', (req, res) => {
+  router.post('/app_user', (req, res) => {
     const { email, password, name, mobile, type } = req.body;
-    logger(2, `Patch app_user: ${id}, name: ${name}`);
+    logger(2, `Post app_user: ${email}, name: ${name}`);
     const textpassword = password;
     bcrypt.hash(textpassword, saltRounds)
       .then(password => {
@@ -55,7 +55,7 @@ module.exports = (router, db) => {
 
 
   // Put app_user
-  router.put('/appUser', (req, res) => {
+  router.put('/app_user', (req, res) => {
     res.status(200).json({ message: 'Functionality not yet implimented' });
   });
 

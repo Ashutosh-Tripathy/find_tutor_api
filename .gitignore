@@ -1,6 +1,6 @@
 #Project
 server/config/env.js
-
+db/ft.sqlite
 
 # Logs
 logs

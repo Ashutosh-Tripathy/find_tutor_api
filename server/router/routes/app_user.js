@@ -68,11 +68,12 @@ module.exports = (router, db) => {
   // Search tutor
   router.get('/searchTutor', (req, res) => {
     let queryObj = {'is_hidden': false};
-    const {subject_id, state_id, district_id} = req.query;
+    //const {subject_id, state_id, district_id} = req.query;
+    const subject_id = parseInt(req.query.subject_id), state_id = parseInt(req.query.state_id), district_id = parseInt(req.query.district_id);
     logger(3, `searchTutor, subject_id: ${subject_id}`);
 
     if(!subject_id) {
-      return res.status(400).json({message: 'Missing query parameter.'});
+      return res.status(400).json({message: 'Missing/invalid query parameter.'});
     }
 
     queryObj['subject_id'] = subject_id;
@@ -85,7 +86,7 @@ module.exports = (router, db) => {
 
     db.app_user.findAll({
       attributes: ['id'],
-      include: [{model: db.tutor, attributes:['subject_id'], where: queryObj, required: true}]
+      include: [{model: db.tutor, attributes:[], where: queryObj, required: true}]
     })
     .then(ids => {
       if (!ids) {

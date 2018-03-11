@@ -85,14 +85,15 @@ module.exports = (router, db) => {
     }
 
     db.app_user.findAll({
-      attributes: ['id'],
-      include: [{model: db.tutor, attributes:[], where: queryObj, required: true}]
+      attributes: ['id', 'name'],
+      include: [{model: db.tutor, as: '',  attributes:['gender', 'min_rate', 'max_rate', 'summary', 'subject_id', 'about_me'], where: queryObj, required: true}]
     })
-    .then(ids => {
-      if (!ids) {
+    .then(tutors => {
+      if (!tutors) {
         res.status(404).json({ message: 'Resource not found.' });
       } else {
-        res.status(200).json(ids);
+        let result = flattenArray(JSON.parse(JSON.stringify(tutors)));
+        res.status(200).json(result);
       }
     })
     .catch(err => {
@@ -150,35 +151,32 @@ module.exports = (router, db) => {
 };
 
 
+var flattenObject = function(ob, depth) {
+  let toReturn = {};
 
+  for (let i in ob) {
+    if (!ob.hasOwnProperty(i)) continue;
 
-// with open('list.txt', 'r') as l:
-// m = l.readlines()
-// s = {}
-// for x in m:
-//   x = x.strip()
-// print(x)
-// id, state = x.split(",")
-// s[state] = id
-// n = []
-// k = []
-// print(s)
-// print("----------------------------")
-// with open('state.txt', 'r') as l:
-// m = l.readlines()
-// for x in m:
-//   x = x.strip()
-// found = False
-// for state in s:
-//   if state in x:
-//     found = True
-// n.append(x.replace("'" + state + "')", s[state] + ")"))
-// if not found:
-//   k.append(x)
+    if ((typeof ob[i]) == 'object') {
+      if (depth < 1) {
+        let flatObject = flattenObject(ob[i], depth + 1);
+        for (let x in flatObject) {
+          if (!flatObject.hasOwnProperty(x)) continue;
 
-// print(n)
-// with open('state.txt', 'w') as l:
-// l.writelines("\n".join(n))
+          toReturn[x] = flatObject[x];
+        }}
+    } else {
+      toReturn[i] = ob[i];
+    }
+  }
+  return toReturn;
+};
 
-// print("+++++++++++++++++++++++++++++++")
-// print(k)
+var flattenArray = (arr) => {
+  let toReturn = [];
+  for (let item of arr){
+    toReturn.push(flattenObject(item, 0));
+  }
+  return toReturn;
+}
+

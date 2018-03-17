@@ -140,7 +140,8 @@ module.exports = (router, db) => {
       if (!tutorDetail) {
         res.status(404).json({ message: 'Resource not found.' });
       } else {
-        res.status(200).json(tutorDetail);
+        let result = flattenObject(JSON.parse(JSON.stringify(tutorDetail)), 0);
+        res.status(200).json(result);
       }
     })
     .catch(err => {
@@ -151,14 +152,14 @@ module.exports = (router, db) => {
 };
 
 
-var flattenObject = function(ob, depth) {
+var flattenObject = function(ob, depth, maxDepth = 1) {
   let toReturn = {};
 
   for (let i in ob) {
     if (!ob.hasOwnProperty(i)) continue;
 
     if ((typeof ob[i]) == 'object') {
-      if (depth < 1) {
+      if (depth < maxDepth) {
         let flatObject = flattenObject(ob[i], depth + 1);
         for (let x in flatObject) {
           if (!flatObject.hasOwnProperty(x)) continue;

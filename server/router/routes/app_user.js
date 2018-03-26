@@ -32,7 +32,8 @@ module.exports = (router, db) => {
 
   // POST single app_user
   router.post('/app_user', (req, res) => {
-    const { email, password, name, mobile, type } = req.body;
+    var { email, password, name, mobile, type } = req.query;
+    var mobile = parseInt(mobile);
     logger(2, `Post app_user: ${email}, name: ${name}`);
     const textpassword = password;
     bcrypt.hash(textpassword, saltRounds)
